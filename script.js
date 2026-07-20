@@ -1,5 +1,5 @@
 // TodayExchangeRate.com — frontend logic
-// Live rates are fetched from /.netlify/functions/rates, which holds the
+// Live rates are fetched from /rates, which holds the
 // API key server-side. The key never appears in this file or in the browser.
 
 const CURRENCIES = [
