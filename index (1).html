@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TodayExchangeRate.com — Live rates for sending money to Nigeria & West Africa</title>
+<meta name="description" content="Today's live exchange rates for USD, GBP, EUR to NGN and other West African currencies. Compare the cheapest way to send money home.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="/" class="logo">TodayExchangeRate<span class="dot">.com</span></a>
+    <nav class="nav">
+      <a href="#converter">Convert</a>
+      <a href="#chart">Charts</a>
+      <a href="#table">All currencies</a>
+      <a href="#corridors">Send money</a>
+      <a href="#alerts">Alerts</a>
+      <a href="#business" class="nav-business">For business</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO: the board -->
+  <section class="board-hero">
+    <div class="wrap">
+      <p class="eyebrow">Interbank mid-market rates · updated every 15 minutes · last checked <span id="last-updated">—</span></p>
+      <h1>Live exchange rates for 160+ currencies,<br>trusted to the minute.</h1>
+      <p class="hero-sub">One rate. No markup, no guesswork. The same mid-market benchmark used by banks and financial institutions — free to check any time.</p>
+
+      <div class="board" id="rate-board" aria-live="polite">
+        <!-- rows injected by script.js -->
+      </div>
+
+      <p class="board-note">Mid-market reference rate — the real rate before any provider adds their margin. <a href="#corridors">See who to actually send with →</a></p>
+    </div>
+  </section>
+
+  <!-- CONVERTER -->
+  <section class="converter" id="converter">
+    <div class="wrap">
+      <h2>Currency converter</h2>
+      <div class="converter-box">
+        <div class="field">
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" value="1,000" min="0" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="from">From</label>
+          <select id="from"></select>
+        </div>
+        <button class="swap" id="swap-note" title="Swap currencies" aria-label="Swap currencies">⇄</button>
+        <div class="field">
+          <label for="to">To</label>
+          <select id="to"></select>
+        </div>
+      </div>
+      <div class="result" id="result">Loading today's rate…</div>
+      <button class="watchlist-btn" id="watchlist-toggle">☆ Add to watchlist</button>
+    </div>
+  </section>
+
+  <!-- HISTORICAL CHART -->
+  <section class="chart-section" id="chart">
+    <div class="wrap">
+      <div class="chart-head">
+        <h2>Rate history</h2>
+        <div class="range-toggle" id="range-toggle">
+          <button data-range="7" class="active">7D</button>
+          <button data-range="30">1M</button>
+          <button data-range="90">3M</button>
+          <button data-range="365">1Y</button>
+          <button data-range="1825">5Y</button>
+        </div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="rate-chart" height="90"></canvas>
+      </div>
+      <p class="chart-note">Historical trend for the pair selected above. <button id="export-csv" class="link-btn">Export CSV</button></p>
+    </div>
+  </section>
+
+  <!-- WATCHLIST -->
+  <section class="watchlist-section" id="watchlist" hidden>
+    <div class="wrap">
+      <h2>Your watchlist</h2>
+      <div class="board" id="watchlist-board"></div>
+    </div>
+  </section>
+
+  <!-- FULL RATE TABLE -->
+  <section class="rate-table-section" id="table">
+    <div class="wrap">
+      <div class="chart-head">
+        <h2>All exchange rates</h2>
+        <div class="field table-base-field">
+          <label for="table-base">Base currency</label>
+          <select id="table-base"></select>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="rate-full-table">
+          <thead>
+            <tr><th>Currency</th><th>Code</th><th>Rate</th><th></th></tr>
+          </thead>
+          <tbody id="full-rate-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEND COMPARISON -->
+  <section class="send" id="corridors">
+    <div class="wrap">
+      <h2>Compare international transfer providers</h2>
+      <p class="section-sub">We compare the mid-market rate against what each provider actually pays out on popular corridors — the gap between the two is where they make their money.</p>
+
+      <div class="corridor-pills" id="corridor-pills">
+        <button class="pill active" data-corridor="US-NG">US → Nigeria</button>
+        <button class="pill" data-corridor="UK-NG">UK → Nigeria</button>
+        <button class="pill" data-corridor="US-IN">US → India</button>
+        <button class="pill" data-corridor="US-PH">US → Philippines</button>
+        <button class="pill" data-corridor="US-MX">US → Mexico</button>
+        <button class="pill" data-corridor="EU-GH">EU → Ghana</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>Speed</th>
+              <th>Est. fee</th>
+              <th>Rate vs mid-market</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="provider-rows">
+            <!-- injected -->
+          </tbody>
+        </table>
+      </div>
+      <p class="disclosure">Some links above are affiliate links — if you sign up through them we may earn a commission at no extra cost to you. This never affects the rates or ranking shown.</p>
+    </div>
+  </section>
+
+  <!-- EDUCATION CONTENT -->
+  <section class="corridor-content" id="learn">
+    <div class="wrap">
+      <h2>Understand what you're actually paying</h2>
+      <div class="corridor-grid">
+        <article>
+          <h3>Mid-market vs. what you receive</h3>
+          <p>Every provider quotes against the same mid-market benchmark, then adds their own margin on top. That margin — not the headline fee — is usually where most of the cost hides.</p>
+        </article>
+        <article>
+          <h3>Best time to send</h3>
+          <p>Rates move throughout the day and across the week. Set a free alert and we'll notify you the moment your target rate hits, so timing works in your favor.</p>
+        </article>
+        <article>
+          <h3>Fee vs. rate markup</h3>
+          <p>A "free transfer" with a poor exchange rate can cost more than a transfer with a small fee at the true mid-market rate. Always compare the total landed amount, not the headline fee.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUSINESS / API -->
+  <section class="business-section" id="business">
+    <div class="wrap business-wrap">
+      <div>
+        <h2>Rate data for your business</h2>
+        <p>Programmatic access to the same live and historical rates powering this site — for invoicing, e-commerce pricing, or financial reporting. JSON, with 99.9% uptime.</p>
+      </div>
+      <a href="mailto:hello@todayexchangerate.com" class="cta-btn cta-btn-lg">Talk to us about API access</a>
+    </div>
+  </section>
+
+  <!-- ALERTS -->
+  <section class="alerts" id="alerts">
+    <div class="wrap alerts-wrap">
+      <div>
+        <h2>Get a text when the rate moves your way</h2>
+        <p>Free daily USD→NGN brief. No spam, unsubscribe anytime.</p>
+      </div>
+      <form class="alert-form" id="alert-form">
+        <input type="email" placeholder="you@email.com" required aria-label="Email address">
+        <button type="submit">Notify me</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>TodayExchangeRate.com — informational rates only, not financial advice. Always confirm the final rate with your chosen provider before sending.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
