@@ -6,7 +6,7 @@
 //   EXCHANGE_RATE_API_KEY = your_key_here
 
 exports.handler = async (event) => {
-  const apiKey = process.env.EXCHANGE_RATE_API_KEY;
+  const API_KEY = "efc51f7b031da6bc97edfc7c";
   const base = event.queryStringParameters?.base || "USD";
 
   if (!apiKey) {
