@@ -59,7 +59,7 @@ let lastSeries = [];
 async function fetchRates(base = "USD") {
   if (ratesCache[base]) return ratesCache[base];
   try {
-    const res = await fetch(`/.netlify/functions/rates?base=${base}`);
+    const res = await fetch(`/rates?base=${base}`);
     if (!res.ok) throw new Error("Rate service unavailable");
     const data = await res.json();
     ratesCache[base] = data[base];
